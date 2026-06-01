@@ -1,0 +1,25 @@
+class Solution {
+public:
+    pair<int, int> getFloorAndCeil(vector<int>& arr, int x) {
+        int floorVal = -1, ceilVal = -1;
+
+        int low = 0, high = arr.size() - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (arr[mid] == x)
+                return {x, x};
+
+            if (arr[mid] < x) {
+                floorVal = arr[mid];
+                low = mid + 1;
+            } else {
+                ceilVal = arr[mid];
+                high = mid - 1;
+            }
+        }
+
+        return {floorVal, ceilVal};
+    }
+};
