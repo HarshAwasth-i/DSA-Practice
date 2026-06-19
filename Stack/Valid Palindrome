@@ -1,0 +1,29 @@
+#include <string>
+#include <cctype>
+using namespace std;
+
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        int left = 0;
+        int right = (int)s.size() - 1;
+
+        while (left < right) {
+            // skip non-alphanumeric from left
+            while (left < right && !isalnum(static_cast<unsigned char>(s[left]))) left++;
+            // skip non-alphanumeric from right
+            while (left < right && !isalnum(static_cast<unsigned char>(s[right]))) right--;
+
+            if (left < right) {
+                if (tolower(static_cast<unsigned char>(s[left])) !=
+                    tolower(static_cast<unsigned char>(s[right])))
+                {
+                    return false;
+                }
+                left++;
+                right--;
+            }
+        }
+        return true;
+    }
+};
