@@ -9,9 +9,9 @@ public:
         int right = (int)s.size() - 1;
 
         while (left < right) {
-            // skip non-alphanumeric from left
+
             while (left < right && !isalnum(static_cast<unsigned char>(s[left]))) left++;
-            // skip non-alphanumeric from right
+
             while (left < right && !isalnum(static_cast<unsigned char>(s[right]))) right--;
 
             if (left < right) {
