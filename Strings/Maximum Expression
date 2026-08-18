@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int T;
+    cin >> T;
+
+    while(T--) {
+        int N;
+        cin >> N;
+
+        string S;
+        cin >> S;
+
+        vector<int> digits;
+        int plusCount = 0;
+        int minusCount = 0;
+
+        for(char c : S) {
+            if(c >= '0' && c <= '9')
+                digits.push_back(c - '0');
+            else if(c == '+')
+                plusCount++;
+            else if(c == '-')
+                minusCount++;
+        }
+
+        sort(digits.begin(), digits.end());
+
+        int totalOps = plusCount + minusCount;
+        string ans = "";
+
+        for(int i = digits.size() - 1; i > totalOps - 1; i--) {
+            ans += to_string(digits[i]);
+        }
+
+        for(int i = totalOps - 1; i >= 0; i--) {
+            if(plusCount > 0) {
+                ans += '+';
+                plusCount--;
+            } else {
+                ans += '-';
+                minusCount--;
+            }
+            ans += to_string(digits[i]);
+        }
+
+        cout << ans << "\n";
+    }
+
+    return 0;
+}
