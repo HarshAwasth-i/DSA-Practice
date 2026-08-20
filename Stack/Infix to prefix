@@ -1,0 +1,13 @@
+string infixToPrefix(string s) {
+    reverse(s.begin(), s.end());
+
+    for(char &c : s) {
+        if(c == '(') c = ')';
+        else if(c == ')') c = '(';
+    }
+
+    string ans = infixToPostfix(s);
+    reverse(ans.begin(), ans.end());
+
+    return ans;
+}
