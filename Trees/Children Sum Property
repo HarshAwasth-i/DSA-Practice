@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool isSumProperty(Node* root) {
+
+        if (root == NULL)
+            return true;
+
+        // Leaf node
+        if (root->left == NULL && root->right == NULL)
+            return true;
+
+        int sum = 0;
+
+        if (root->left)
+            sum += root->left->data;
+
+        if (root->right)
+            sum += root->right->data;
+
+        if (root->data != sum)
+            return false;
+
+        return isSumProperty(root->left) &&
+               isSumProperty(root->right);
+    }
+};
