@@ -7,7 +7,7 @@ int main() {
     cin >> T;
 
     while(T--) {
-
+ 
         int n, m;
         cin >> n >> m;
 
