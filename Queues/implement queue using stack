@@ -26,7 +26,6 @@ public:
         }
         return outStack.top();
     }
-
     bool empty() {
         return inStack.empty() && outStack.empty();
     }
