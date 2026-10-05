@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int minimumCost(string target, vector<string>& words, vector<int>& costs) {
+        int n = target.size();
+
+        // dp[i] = minimum cost to build target[0...i-1]
+        vector<int> dp(n + 1, INT_MAX);
+
+        dp[0] = 0;
+
+        for (int i = 1; i <= n; i++) {
+
+            for (int j = 0; j < words.size(); j++) {
+
+                int len = words[j].size();
+
+                // Check if word can end at position i
+                if (i >= len &&
+                    target.substr(i - len, len) == words[j] &&
+                    dp[i - len] != INT_MAX) {
+
+                    dp[i] = min(dp[i],
+                                dp[i - len] + costs[j]);
+                }
+            }
+        }
+
+        return dp[n] == INT_MAX ? -1 : dp[n];
+    }
+};
