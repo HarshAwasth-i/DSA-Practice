@@ -55,3 +55,13 @@ public:
         return ans;
     }
 };
+
+
+
+//Algo for the ques  
+Compare adjacent words and find the first differing characters.
+Create a directed edge from the first character to the second.
+Calculate indegrees.
+Push all zero-indegree characters into a queue.
+Perform BFS, appending characters to the answer and reducing neighbor indegrees.
+If all K characters are processed, return the answer; otherwise, return an empty string.
