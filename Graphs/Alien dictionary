@@ -1,0 +1,57 @@
+class Solution {
+public:
+    string findOrder(vector<string>& words, int N, int K) {
+        vector<vector<int>> adj(K);
+        vector<int> indegree(K, 0);
+
+        // Build graph by comparing adjacent words
+        for (int i = 0; i < N - 1; i++) {
+            string s1 = words[i];
+            string s2 = words[i + 1];
+
+            int len = min(s1.size(), s2.size());
+
+            for (int j = 0; j < len; j++) {
+                if (s1[j] != s2[j]) {
+                    int u = s1[j] - 'a';
+                    int v = s2[j] - 'a';
+
+                    adj[u].push_back(v);
+                    indegree[v]++;
+
+                    break;
+                }
+            }
+        }
+
+        queue<int> q;
+
+        // Push characters with indegree 0
+        for (int i = 0; i < K; i++) {
+            if (indegree[i] == 0)
+                q.push(i);
+        }
+
+        string ans;
+
+        // Perform BFS (Kahn's Algorithm)
+        while (!q.empty()) {
+            int node = q.front();
+            q.pop();
+
+            ans += char(node + 'a');
+
+            for (int nei : adj[node]) {
+                indegree[nei]--;
+
+                if (indegree[nei] == 0)
+                    q.push(nei);
+            }
+        }
+
+        if (ans.size() != K)
+            return "";
+
+        return ans;
+    }
+};
