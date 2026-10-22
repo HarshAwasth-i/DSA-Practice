@@ -1,0 +1,67 @@
+class Solution {
+public:
+    vector<int> shortestPath(int N, int M, vector<vector<int>>& edges) {
+        vector<vector<pair<int, int>>> adj(N);
+        vector<int> indegree(N, 0);
+
+        // Build weighted graph and calculate indegree
+        for (auto& e : edges) {
+            int u = e[0];
+            int v = e[1];
+            int wt = e[2];
+
+            adj[u].push_back({v, wt});
+            indegree[v]++;
+        }
+
+        // Topological sort using Kahn's Algorithm
+        queue<int> q;
+
+        for (int i = 0; i < N; i++) {
+            if (indegree[i] == 0)
+                q.push(i);
+        }
+
+        vector<int> topo;
+
+        while (!q.empty()) {
+            int node = q.front();
+            q.pop();
+
+            topo.push_back(node);
+
+            for (auto& edge : adj[node]) {
+                int nei = edge.first;
+                indegree[nei]--;
+
+                if (indegree[nei] == 0)
+                    q.push(nei);
+            }
+        }
+
+        // Initialize distances
+        vector<int> dist(N, INT_MAX);
+        dist[0] = 0;
+
+        // Calculate shortest distances in topological order
+        for (int node : topo) {
+            if (dist[node] == INT_MAX)
+                continue;
+
+            for (auto& edge : adj[node]) {
+                int nei = edge.first;
+                int wt = edge.second;
+
+                dist[nei] = min(dist[nei], dist[node] + wt);
+            }
+        }
+
+        // Mark unreachable nodes as -1
+        for (int i = 0; i < N; i++) {
+            if (dist[i] == INT_MAX)
+                dist[i] = -1;
+        }
+
+        return dist;
+    }
+};
